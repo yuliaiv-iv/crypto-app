@@ -23,6 +23,11 @@ a:hover{
   text-align: center;
 }
 
+div.ant-typography {
+  /* color: white; */
+  text-align: start;
+}
+
 .heading {
   text-align: start;
 }
@@ -46,8 +51,8 @@ a:hover{
   padding: 20px;
 }
 .nav-container{
-  /* position: fixed;
-  left: 0; */
+  position: fixed;
+  left: 0;
   margin: 10px;
   height: 100vh;
   margin: 0px;
@@ -58,7 +63,6 @@ a:hover{
   background-color: #001529;
   display: flex;
   padding: 20px;
-  align-items: center;
   width: 100%;
 }
 .logo{
@@ -362,7 +366,7 @@ width: 70%;
   margin: 0px 10px !important;
 }
 .search-crypto{
-  margin: 20px auto 30px auto;
+  margin: 10px 0 35px 0;
   width: 250px;
 }
 .crypto-card-container{
@@ -373,6 +377,7 @@ width: 70%;
 }
 .crypto-card .crypto-image{
   width:35px;
+  height: 35px;
 }
 .select-timeperiod{
   width: 200px !important;

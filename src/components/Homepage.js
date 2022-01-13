@@ -4,18 +4,19 @@ import { Typography, Row, Col, Statistic } from "antd";
 import { Link } from "react-router-dom";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
+import { Cryptocurrencies, News } from ".";
 
 const { Title } = Typography;
 
 const Homepage = () => {
   // reduct provides a isFetching state
-  const { data, isFetching } = useGetCryptosQuery();
+  const { data, isFetching } = useGetCryptosQuery(12);
 
-  // console.log(data.data.stats)
-
-  const globalStats = data?.data?.stats;
+  // const globalStats = data?.data?.stats;
 
   if (isFetching) return "Loading";
+
+  const globalStats = data?.data?.stats;
 
   return (
     <>
@@ -54,6 +55,27 @@ const Homepage = () => {
           />
         </Col>
       </Row>
+      <div className="home-heading-container">
+        <Title level={2} className="home-title">
+          Top 10 Cryptocurrencies in the world
+        </Title>
+        {/* <Title level={3} className="show-more">
+          <Link to="/cryptocurrencies">Show More</Link>
+        </Title> */}
+      </div>
+      <Cryptocurrencies simplified />
+      <Title level={4} className="show-more">
+          <Link to="/cryptocurrencies">Show More</Link>
+        </Title>
+      <div className="home-heading-container">
+        <Title level={2} className="home-title">
+          Latest Crypto News
+        </Title>
+        <Title level={4} className="show-more">
+          <Link to="/news">Show More</Link>
+        </Title>
+      </div>
+      <News simplified />
     </>
   );
 };
