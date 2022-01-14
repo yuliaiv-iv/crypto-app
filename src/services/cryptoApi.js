@@ -27,11 +27,17 @@ export const cryptoApi = createApi({
     }),
 
     getCryptoHistory: builder.query({
-      query: ({ id, timeperiod }) => createRequest(`coin/${id}/history?timeperiod=${timeperiod}`),
+      query: ({ id, timeperiod }) =>
+        createRequest(`coin/${id}/history?timePeriod=${timeperiod}`),
     }),
   }),
 });
+console.log(cryptoApi.endpoints.getCryptoHistory);
 
 // redux toolkit creates a hook that can be called instantly to
 // get all data for your query
-export const { useGetCryptosQuery, useGetCryptoDetailsQuery, useGetCryptoHistoryQuery } = cryptoApi;
+export const {
+  useGetCryptosQuery,
+  useGetCryptoDetailsQuery,
+  useGetCryptoHistoryQuery,
+} = cryptoApi;
