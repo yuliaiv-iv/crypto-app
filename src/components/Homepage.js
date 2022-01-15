@@ -1,13 +1,14 @@
 import React from "react";
 import millify from "millify";
-import { Typography, Row, Col, Statistic } from "antd";
+// import { Typography, Row, Col, Statistic } from "antd";
 import { Link } from "react-router-dom";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { Cryptocurrencies, News } from ".";
 import Loader from "./Loader";
+import { Button, Offcanvas, Container, Row, Col } from "react-bootstrap";
 
-const { Title } = Typography;
+// const { Title } = Typography;
 
 const Homepage = () => {
   // reduct provides a isFetching state
@@ -18,61 +19,40 @@ const Homepage = () => {
   const globalStats = data?.data?.stats;
 
   return (
-    <>
-      <Title level={2} className="heading">
-        Global Crypto Statistic
-      </Title>
-      <Row>
-        <Col span={12}>
-          <Statistic
-            title="Total Crypto Currencies"
-            value={globalStats.total}
-          />
+    <Container className="my-4">
+      <h1>Global Crypto Statistic</h1>
+      <Row className="my-5">
+        <Col md={6}>
+          <h4>Total Crypto Currencies</h4>
+          <h3>{millify(globalStats.total)}</h3>
         </Col>
-        <Col span={12}>
-          <Statistic
-            title="Total Exchanges"
-            value={millify(globalStats.totalExchanges)}
-          />
+        <Col md={6}>
+          <h4>Total Exchanges</h4>
+          <h3>{millify(globalStats.totalExchanges)}</h3>
         </Col>
-        <Col span={12}>
-          <Statistic
-            title="Total Market Cap"
-            value={millify(globalStats.totalMarketCap)}
-          />
+        <Col md={6}>
+          <h4>Total Market Cap</h4>
+          <h3>$ {millify(globalStats.totalMarketCap)}</h3>
         </Col>
-        <Col span={12}>
-          <Statistic
-            title="Total 24h Volume"
-            value={millify(globalStats.total24hVolume)}
-          />
+        <Col md={6}>
+          <h4>Total 24h Volume</h4>
+          <h3>$ {millify(globalStats.total24hVolume)}</h3>
         </Col>
-        <Col span={12}>
-          <Statistic
-            title="Total Markets"
-            value={millify(globalStats.totalMarkets)}
-          />
+        <Col md={6}>
+          <h4>Total Markets</h4>
+          <h3>{millify(globalStats.totalMarkets)}</h3>
         </Col>
       </Row>
-      <div className="home-heading-container">
-        <Title level={2} className="home-title">
-          Top 10 Cryptocurrencies in the world
-        </Title>
-      </div>
+      <h1>Top 12 Cryptos In The World</h1>
       <Cryptocurrencies simplified />
-      <Title level={4} className="show-more">
-          <Link to="/cryptocurrencies">Show More</Link>
-        </Title>
-      <div className="home-heading-container">
-        <Title level={2} className="home-title">
-          Latest Crypto News
-        </Title>
-        <Title level={4} className="show-more">
-          <Link to="/news">Show More</Link>
-        </Title>
-      </div>
+      <Link to="/cryptocurrencies">
+        <Button>Show more</Button>
+      </Link>
       <News simplified />
-    </>
+      <Link to="/news">
+        <Button>Show more</Button>
+      </Link>
+    </Container>
   );
 };
 

@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import millify from "millify";
-import { Card, Row, Col, Input, Typography } from "antd";
+import { Card, Row, Col, Form, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import Loader from "./Loader";
 
 const Cryptocurrencies = ({ simplified }) => {
-
-  const count = simplified ? 12: 100;
+  const count = simplified ? 12 : 100;
   const { data, isFetching } = useGetCryptosQuery(count);
   const [cryptos, setCryptos] = useState();
   const [searchTerm, setSearchTerm] = useState("");
-
-  // console.log(cryptosList)
 
   useEffect(() => {
     setCryptos(data?.data?.coins);
@@ -31,42 +28,38 @@ const Cryptocurrencies = ({ simplified }) => {
   if (isFetching) return <Loader />;
 
   return (
-    <>
+    <Container className="my-5">
       {!simplified && (
-        <div className="search-crypto">
-          <Input placeholder="Search Cryptocurrency" onChange={handleSearch} />
-        </div>
+        <Form.Control
+          size="lg"
+          placeholder="Search Cryptocurrency"
+          onChange={handleSearch}
+        />
       )}
-      <Row justify="center" gutter={[32, 32]} className="crypto-card-container">
+      <Row className="my-5">
         {cryptos?.map((currency) => (
-          <Col
-            xs={24}
-            sm={12}
-            lg={6}
-            className="crypto-card"
-            key={currency.uuid}
-          >
-            <Link key={currency.uuid} to={`/crypto/${currency.uuid}`}>
-              <Card
-                title={`${currency.rank}. ${currency.name}`}
-                extra={
-                  <img
-                    className="crypto-image"
+          <Col md={4} lg={3} sm={6} className="my-3" key={currency.uuid}>
+            <Card>
+              <Link to={`/crypto/${currency.uuid}`}>
+                <Card.Header bsPrefix="card-header">
+                  <Card.Title>{`${currency.rank}. ${currency.name}`}</Card.Title>
+                  <Card.Img
+                    bsPrefix="card-img"
                     alt={currency.name}
                     src={currency.iconUrl}
                   />
-                }
-                hoverable
-              >
-                <p>Price: {millify(currency.price)}</p>
-                <p>Market Cap: {millify(currency.marketCap)}</p>
-                <p>Daily Change: {currency.change}%</p>
-              </Card>
-            </Link>
+                </Card.Header>
+                <Card.Body>
+                  <Card.Text>Price: {millify(currency.price)}</Card.Text>
+                  <Card.Text>Cap: {millify(currency.marketCap)}</Card.Text>
+                  <Card.Text>Daily Change: {currency.change}%</Card.Text>
+                </Card.Body>
+              </Link>
+            </Card>
           </Col>
         ))}
       </Row>
-    </>
+    </Container>
   );
 };
 

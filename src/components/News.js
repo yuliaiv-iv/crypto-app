@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Select, Typography, Row, Col, Avatar, Card } from "antd";
+// import { Select, Typography, Row, Col, Avatar, Card } from "antd";
 import moment from "moment";
+import { Card, Row, Col, Form, Container } from "react-bootstrap";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi";
 import Loader from "./Loader";
-const { Text, Title } = Typography;
-const { Option } = Select;
+// const { Text, Title } = Typography;
+// const { Option } = Select;
 const demoImage =
   "https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News";
 
@@ -20,72 +21,70 @@ const News = ({ simplified }) => {
   });
 
   function handleSearch(value) {
-    setNewsCategory(value);
+    setNewsCategory(value.target.value);
   }
 
   if (!cryptoNews?.value) return <Loader />;
 
+  console.log(cryptoNews)
+
   return (
-    <Row gutter={[24, 24]}>
+    <Container className="my-5">
       {!simplified && (
-        <Col span={24}>
-          <Select
-            showSearch
-            className="select-news"
-            placeholder="Select a Crypto"
-            optionFilterProp="children"
-            onChange={handleSearch}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            <Option value="Cryptocurrency">Cryptocurrency</Option>
-            {data?.data?.coins?.map((currency) => (
-              <Option value={currency.name}>{currency.name}</Option>
-            ))}
-          </Select>
-        </Col>
+        <Form.Select
+          size="lg"
+          onChange={handleSearch}
+        >
+          <option value="Cryptocurrency">Cryptocurrency</option>
+          {data?.data?.coins?.map((currency, i) => (
+            <option key={i} value={currency.name}>{currency.name}</option>
+          ))}
+        </Form.Select>
       )}
-      {cryptoNews.value.map((news, i) => (
-        <Col xs={24} sm={12} lg={8} key={i}>
-          <Card hoverable className="news-card">
-            <a href={news.url} target="_blank" rel="noreferrer">
-              <div className="news-image-container">
-                <Title className="news-title" level={4}>
-                  {news.name}
-                </Title>
-                <img
-                  src={news?.image?.thumbnail?.contentUrl || demoImage}
+      <Row className="my-5">
+        {cryptoNews.value.map((news, i) => (
+          <Col lg={4} md={6} sm={12} key={i} className="my-3">
+            <Card>
+              <a href={news.url} target="_blank" rel="noreferrer">
+                <Card.Img
+                  className="news-img"
+                  variant="top"
+                  src={
+                    `${news?.image?.thumbnail?.contentUrl}` || demoImage
+                  }
                   alt=""
                 />
-              </div>
-              <p>
-                {news.description.length > 100
-                  ? `${news.description.substring(0, 100)}...`
-                  : news.description}
-              </p>
-              <div className="provider-container">
-                <div>
-                  <Avatar
+                <Card.Body>
+                  <Card.Title as="h4">
+                    {news.name.length > 60
+                      ? `${news.name.substring(0, 60)}...`
+                      : news.name}
+                  </Card.Title>
+                  <Card.Text bsPrefix="news-text">
+                    {news.description.length > 130
+                      ? `${news.description.substring(0, 130)}...`
+                      : news.description}
+                  </Card.Text>
+                </Card.Body>
+                <Container className="news-provider">
+                  <Card.Img
                     src={
                       news.provider[0]?.image?.thumbnail?.contentUrl ||
                       demoImage
                     }
                     alt=""
                   />
-                  <Text className="provider-name">
-                    {news.provider[0]?.name}
-                  </Text>
-                </div>
-                <Text>
-                  {moment(news.datePublished).startOf("ss").fromNow()}
-                </Text>
-              </div>
-            </a>
-          </Card>
-        </Col>
-      ))}
-    </Row>
+                  <Card.Title as="h6">{news.provider[0]?.name}</Card.Title>
+                  <Card.Title as="h6">
+                    {moment(news.datePublished).startOf("ss").fromNow()}
+                  </Card.Title>
+                </Container>
+              </a>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 
