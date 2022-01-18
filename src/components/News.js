@@ -26,8 +26,6 @@ const News = ({ simplified }) => {
 
   if (!cryptoNews?.value) return <Loader />;
 
-  console.log(cryptoNews)
-
   return (
     <Container className="my-5">
       {!simplified && (

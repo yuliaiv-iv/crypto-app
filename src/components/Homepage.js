@@ -1,14 +1,12 @@
 import React from "react";
 import millify from "millify";
-// import { Typography, Row, Col, Statistic } from "antd";
 import { Link } from "react-router-dom";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { Cryptocurrencies, News } from ".";
 import Loader from "./Loader";
-import { Button, Offcanvas, Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col } from "react-bootstrap";
 
-// const { Title } = Typography;
 
 const Homepage = () => {
   // reduct provides a isFetching state
