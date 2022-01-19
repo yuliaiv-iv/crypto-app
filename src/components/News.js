@@ -29,13 +29,12 @@ const News = ({ simplified }) => {
   return (
     <Container className="my-5">
       {!simplified && (
-        <Form.Select
-          size="lg"
-          onChange={handleSearch}
-        >
+        <Form.Select size="lg" onChange={handleSearch}>
           <option value="Cryptocurrency">Cryptocurrency</option>
           {data?.data?.coins?.map((currency, i) => (
-            <option key={i} value={currency.name}>{currency.name}</option>
+            <option key={i} value={currency.name}>
+              {currency.name}
+            </option>
           ))}
         </Form.Select>
       )}
@@ -47,35 +46,26 @@ const News = ({ simplified }) => {
                 <Card.Img
                   className="news-img"
                   variant="top"
-                  src={
-                    `${news?.image?.thumbnail?.contentUrl}` || demoImage
-                  }
+                  src={`${news?.image?.thumbnail?.contentUrl}` || demoImage}
                   alt=""
                 />
                 <Card.Body>
                   <Card.Title as="h4">
-                    {news.name.length > 60
-                      ? `${news.name.substring(0, 60)}...`
+                    {news.name.length > 50
+                      ? `${news.name.substring(0, 50)}...`
                       : news.name}
                   </Card.Title>
                   <Card.Text bsPrefix="news-text">
-                    {news.description.length > 130
-                      ? `${news.description.substring(0, 130)}...`
+                    {news.description.length > 80
+                      ? `${news.description.substring(0, 80)}...`
                       : news.description}
                   </Card.Text>
                 </Card.Body>
                 <Container className="news-provider">
-                  <Card.Img
-                    src={
-                      news.provider[0]?.image?.thumbnail?.contentUrl ||
-                      demoImage
-                    }
-                    alt=""
-                  />
                   <Card.Title as="h6">{news.provider[0]?.name}</Card.Title>
-                  <Card.Title as="h6">
+                  {/* <Card.Title as="h6">
                     {moment(news.datePublished).startOf("ss").fromNow()}
-                  </Card.Title>
+                  </Card.Title> */}
                 </Container>
               </a>
             </Card>

@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import HTMLReactParser from "html-react-parser";
-import { Card, Row, Col, Form, Container, ListGroup } from "react-bootstrap";
+import {
+  Card,
+  Row,
+  Col,
+  InputGroup,
+  Container,
+  ListGroup,
+  DropdownButton,
+  Dropdown,
+  FormControl,
+  Form,
+} from "react-bootstrap";
+import Select from "react-select";
 import { useParams } from "react-router-dom";
 import millify from "millify";
 // import { Col, Row, Typography, Select } from "antd";
@@ -110,6 +122,16 @@ const CryptoDetails = () => {
         {cryptoDetails.name} live price in US Dollar (USD). View value
         statistics, market cap and supply.
       </p>
+      {/* <Container className="select-style">
+        <select>
+          <option value="0">Select car:</option>
+          <option value="1">Audi</option>
+          <option value="2">BMW</option>
+          <option value="3">Citroen</option>
+          <option value="4">Ford</option>
+          <option value="5">Honda</option>
+        </select>
+      </Container> */}
       <LineChart
         coinHistory={coinHistory}
         currentPrice={millify(cryptoDetails?.price)}
@@ -118,7 +140,7 @@ const CryptoDetails = () => {
       <Container className="my-5">
         <Row>
           <Col md={6} className="info-card">
-            <h2>{cryptoDetails.name} Value Statistics</h2>
+            <h2>{cryptoDetails.name} Value</h2>
             <p>
               An overview showing the statistics of {cryptoDetails.name}, such
               as the base and quote currency, the rank, and trading volume.
@@ -167,83 +189,44 @@ const CryptoDetails = () => {
           </Col>
         </Row>
       </Container>
+      <Container className="my-5">
+        <Row>
+          <Col md={6}>
+            <h2>What is {cryptoDetails.name}?</h2>
+            {HTMLReactParser(cryptoDetails.description)}
+          </Col>
+          <Col md={6}>
+            <h2>{cryptoDetails.name} Links</h2>
+            {cryptoDetails.links?.map((link) => (
+              <Card className="details">
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="info">
+                    <Col className="info-title" sm={6}>
+                      <h6>{link.type}</h6>
+                    </Col>
+                    <Col className="link">
+                      <a href={link.url} target="_blank" rel="noreferrer">
+                        {link.name}
+                      </a>
+                    </Col>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
+            ))}
+          </Col>
+        </Row>
+      </Container>
     </Container>
-    //   <Select
-    //     defaultValue="7d"
-    //     className="select-timeperiod"
-    //     placeholder="Select Timeperiod"
-    //     onChange={(value) => setTimeperiod(value)}
-    //   >
-    //     {time.map((date) => (
-    //       <Option key={date}>{date}</Option>
-    //     ))}
-    //   </Select>
-    //   <Col className="stats-container">
-    //     <Col className="coin-value-statistics">
-    //       <Col className="coin-value-statistics-heading">
-    //         <Title level={3} className="coin-details-heading">
-    //           {cryptoDetails.name} Value Statistics
-    //         </Title>
-    //         <p>
-    //           An overview showing the statistics of {cryptoDetails.name}, such
-    //           as the base and quote currency, the rank, and trading volume.
-    //         </p>
-    //       </Col>
-    // {stats.map(({ icon, title, value }) => (
-    //   <Col className="coin-stats" key={title}>
-    //     <Col className="coin-stats-name">
-    //       <Text>{icon}</Text>
-    //       <Text>{title}</Text>
-    //     </Col>
-    //     <Text className="stats">{value}</Text>
-    //   </Col>
-    // ))}
-    //     </Col>
-    //     <Col className="other-stats-info">
-    //       <Col className="coin-value-statistics-heading">
-    //         <Title level={3} className="coin-details-heading">
-    //           Other Stats Info
-    //         </Title>
-    //         <p>
-    //           An overview showing the statistics of {cryptoDetails.name}, such
-    //           as the base and quote currency, the rank, and trading volume.
-    //         </p>
-    //       </Col>
-    //       {genericStats.map(({ icon, title, value }) => (
-    //         <Col className="coin-stats" key={title}>
-    //           <Col className="coin-stats-name">
-    //             <Text>{icon}</Text>
-    //             <Text>{title}</Text>
-    //           </Col>
-    //           <Text className="stats">{value}</Text>
-    //         </Col>
-    //       ))}
-    //     </Col>
-    //   </Col>
-    //   <Col className="coin-desc-link">
-    //     <Row className="coin-desc">
-    //       <Title level={3} className="coin-details-heading">
-    //         What is {cryptoDetails.name}?
-    //       </Title>
-    //       {HTMLReactParser(cryptoDetails.description)}
-    //     </Row>
-    //     <Col className="coin-links">
-    //       <Title level={3} className="coin-details-heading">
-    //         {cryptoDetails.name} Links
-    //       </Title>
-    //       {cryptoDetails.links?.map((link) => (
-    //         <Row className="coin-link" key={link.name}>
-    //           <Title level={5} className="link-name">
-    //             {link.type}
-    //           </Title>
-    //           <a href={link.url} target="_blank" rel="noreferrer">
-    //             {link.name}
-    //           </a>
-    //         </Row>
-    //       ))}
-    //     </Col>
-    //   </Col>
-    // </Col>
+    // <Select
+    //   defaultValue="7d"
+    //   className="select-timeperiod"
+    //   placeholder="Select Timeperiod"
+    //   onChange={(value) => setTimeperiod(value)}
+    // >
+    //   {time.map((date) => (
+    //     <Option key={date}>{date}</Option>
+    //   ))}
+    // </Select>
   );
 };
 
