@@ -168,3 +168,28 @@ p {
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgb(162 116 248 / 25%);
 }
+
+.navbar  {
+  background-color: #d0b7ff;
+}
+
+.dropdown-menu.show {
+  display: block;
+  height: 100vh;
+  overflow: scroll;
+  width: 100%;
+}
+
+.drop-btn {
+  align-items: center;
+  width: 100%;
+  background-color: transparent;
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .drop-btn:hover {
+  background-color: transparent;
+  border-color: var(--bs-purple);
+} */

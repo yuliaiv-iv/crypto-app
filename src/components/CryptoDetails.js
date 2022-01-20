@@ -4,13 +4,9 @@ import {
   Card,
   Row,
   Col,
-  InputGroup,
   Container,
   ListGroup,
-  DropdownButton,
   Dropdown,
-  FormControl,
-  Form,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import millify from "millify";
@@ -41,9 +37,8 @@ const CryptoDetails = () => {
   const { data: coinHistory } = useGetCryptoHistoryQuery({ id, timeperiod });
   const cryptoDetails = data?.data?.coin;
 
-
   if (isFetching) return <Loader />;
-  const volume24h = cryptoDetails["24hVolume"]
+  const volume24h = cryptoDetails["24hVolume"];
 
   const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
@@ -117,7 +112,7 @@ const CryptoDetails = () => {
     return (
       <Col>
         {content.map(({ icon, title, value }) => (
-          <Card className="details">
+          <Card key={title} className="details">
             <ListGroup variant="flush">
               <ListGroup.Item className="info">
                 <Col className="info-title" sm={8}>
@@ -144,6 +139,23 @@ const CryptoDetails = () => {
         {cryptoDetails.name} live price in US Dollar (USD). View value
         statistics, market cap and supply.
       </p>
+      <Dropdown>
+        <Dropdown.Toggle className="drop-btn" id="dropdown-basic">
+          {timeperiod}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {time.map((date, i) => (
+            <Dropdown.Item
+              key={i}
+              onClick={() => {
+                setTimeperiod(date);
+              }}
+            >
+              {date}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
       <LineChart
         coinHistory={coinHistory}
         currentPrice={millify(cryptoDetails?.price)}
@@ -177,8 +189,8 @@ const CryptoDetails = () => {
           </Col>
           <Col md={6}>
             <h2 className="text-details">{cryptoDetails.name} Links</h2>
-            {cryptoDetails.links?.map((link) => (
-              <Card className="details">
+            {cryptoDetails.links?.map((link, i) => (
+              <Card className="details" key={i}>
                 <ListGroup variant="flush">
                   <ListGroup.Item className="info">
                     <Col className="info-title" sm={6}>

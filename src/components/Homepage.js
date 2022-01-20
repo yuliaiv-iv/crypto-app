@@ -47,26 +47,6 @@ const Homepage = () => {
             <h5>{number}</h5>
           </Col>
         ))}
-        {/* <Col md={6}>
-          <h4>Total Crypto Currencies</h4>
-          <h3>{millify(globalStats.total)}</h3>
-        </Col>
-        <Col md={6}>
-          <h4>Total Exchanges</h4>
-          <h3>{millify(globalStats.totalExchanges)}</h3>
-        </Col>
-        <Col md={6}>
-          <h4>Total Market Cap</h4>
-          <h3>$ {millify(globalStats.totalMarketCap)}</h3>
-        </Col>
-        <Col md={6}>
-          <h4>Total 24h Volume</h4>
-          <h3>$ {millify(globalStats.total24hVolume)}</h3>
-        </Col>
-        <Col md={6}>
-          <h4>Total Markets</h4>
-          <h3>{millify(globalStats.totalMarkets)}</h3>
-        </Col> */}
       </Row>
       <Cryptocurrencies simplified />
       <Link to="/cryptocurrencies">

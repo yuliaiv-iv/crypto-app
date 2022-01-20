@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import millify from "millify";
 import { Card, Row, Col, Form, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import Loader from "./Loader";
 
