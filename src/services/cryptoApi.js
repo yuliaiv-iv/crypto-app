@@ -32,7 +32,6 @@ export const cryptoApi = createApi({
     }),
   }),
 });
-console.log(cryptoApi.endpoints.getCryptoHistory);
 
 // redux toolkit creates a hook that can be called instantly to
 // get all data for your query

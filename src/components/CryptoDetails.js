@@ -12,10 +12,9 @@ import {
   FormControl,
   Form,
 } from "react-bootstrap";
-import Select from "react-select";
 import { useParams } from "react-router-dom";
 import millify from "millify";
-// import { Col, Row, Typography, Select } from "antd";
+
 import {
   MoneyCollectOutlined,
   DollarCircleOutlined,
@@ -41,9 +40,10 @@ const CryptoDetails = () => {
   const { data, isFetching } = useGetCryptoDetailsQuery(id);
   const { data: coinHistory } = useGetCryptoHistoryQuery({ id, timeperiod });
   const cryptoDetails = data?.data?.coin;
-  // const volume24h = cryptoDetails["24hVolume"]
+
 
   if (isFetching) return <Loader />;
+  const volume24h = cryptoDetails["24hVolume"]
 
   const time = ["3h", "24h", "7d", "30d", "1y", "3m", "3y", "5y"];
 
@@ -56,7 +56,7 @@ const CryptoDetails = () => {
     { title: "Rank", value: cryptoDetails?.rank, icon: <NumberOutlined /> },
     {
       title: "24h Volume",
-      value: `$ ${cryptoDetails?.volume && millify(cryptoDetails?.volume)}`,
+      value: `$ ${millify(volume24h)}`,
       icon: <ThunderboltOutlined />,
     },
     {
@@ -67,7 +67,7 @@ const CryptoDetails = () => {
       icon: <DollarCircleOutlined />,
     },
     {
-      title: "All-time-high(daily avg.)",
+      title: "All-time-high(avg)",
       value: `$ ${
         cryptoDetails?.allTimeHigh?.price &&
         millify(cryptoDetails?.allTimeHigh?.price)
@@ -113,8 +113,30 @@ const CryptoDetails = () => {
     },
   ];
 
+  function insertHtml(content) {
+    return (
+      <Col>
+        {content.map(({ icon, title, value }) => (
+          <Card className="details">
+            <ListGroup variant="flush">
+              <ListGroup.Item className="info">
+                <Col className="info-title" sm={8}>
+                  {icon}
+                  <p className="info-p">{title}</p>
+                </Col>
+                <Col>
+                  <p className="info-p price">{value}</p>
+                </Col>
+              </ListGroup.Item>
+            </ListGroup>
+          </Card>
+        ))}
+      </Col>
+    );
+  }
+
   return (
-    <Container className="my-4">
+    <Container className="my-5">
       <h1>
         {cryptoDetails.name} ({cryptoDetails.symbol}) Price
       </h1>
@@ -122,16 +144,6 @@ const CryptoDetails = () => {
         {cryptoDetails.name} live price in US Dollar (USD). View value
         statistics, market cap and supply.
       </p>
-      {/* <Container className="select-style">
-        <select>
-          <option value="0">Select car:</option>
-          <option value="1">Audi</option>
-          <option value="2">BMW</option>
-          <option value="3">Citroen</option>
-          <option value="4">Ford</option>
-          <option value="5">Honda</option>
-        </select>
-      </Container> */}
       <LineChart
         coinHistory={coinHistory}
         currentPrice={millify(cryptoDetails?.price)}
@@ -140,69 +152,39 @@ const CryptoDetails = () => {
       <Container className="my-5">
         <Row>
           <Col md={6} className="info-card">
-            <h2>{cryptoDetails.name} Value</h2>
+            <h2 className="text-details">{cryptoDetails.name} Value</h2>
             <p>
               An overview showing the statistics of {cryptoDetails.name}, such
               as the base and quote currency, the rank, and trading volume.
             </p>
-            <Col>
-              {stats.map(({ icon, title, value }) => (
-                <Card className="details">
-                  <ListGroup variant="flush">
-                    <ListGroup.Item className="info">
-                      <Col className="info-title" sm={8}>
-                        {icon}
-                        <p className="info-p">{title}</p>
-                      </Col>
-                      <Col>
-                        <p className="info-p price">{value}</p>
-                      </Col>
-                    </ListGroup.Item>
-                  </ListGroup>
-                </Card>
-              ))}
-            </Col>
+            {insertHtml(stats)}
           </Col>
           <Col md={6} className="info-card">
-            <h2>Other Stats Info</h2>
+            <h2 className="text-details">Other Stats Info</h2>
             <p>
               An overview showing the statistics of {cryptoDetails.name}, such
               as the base and quote currency, the rank, and trading volume.
             </p>
-            <Col>
-              {genericStats.map(({ icon, title, value }) => (
-                <Card className="details">
-                  <ListGroup variant="flush">
-                    <ListGroup.Item className="info">
-                      <Col className="info-title" sm={8}>
-                        {icon}
-                        <p className="info-p">{title}</p>
-                      </Col>
-                      <Col>
-                        <p className="info-p price">{value}</p>
-                      </Col>
-                    </ListGroup.Item>
-                  </ListGroup>
-                </Card>
-              ))}
-            </Col>
+            {insertHtml(genericStats)}
           </Col>
         </Row>
       </Container>
       <Container className="my-5">
         <Row>
           <Col md={6}>
-            <h2>What is {cryptoDetails.name}?</h2>
+            <h2 className="text-details">What is {cryptoDetails.name}?</h2>
             {HTMLReactParser(cryptoDetails.description)}
           </Col>
           <Col md={6}>
-            <h2>{cryptoDetails.name} Links</h2>
+            <h2 className="text-details">{cryptoDetails.name} Links</h2>
             {cryptoDetails.links?.map((link) => (
               <Card className="details">
                 <ListGroup variant="flush">
                   <ListGroup.Item className="info">
                     <Col className="info-title" sm={6}>
-                      <h6>{link.type}</h6>
+                      <h6>
+                        {link.type.charAt(0).toUpperCase() + link.type.slice(1)}
+                      </h6>
                     </Col>
                     <Col className="link">
                       <a href={link.url} target="_blank" rel="noreferrer">

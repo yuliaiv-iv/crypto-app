@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-// import { Select, Typography, Row, Col, Avatar, Card } from "antd";
 import moment from "moment";
 import { Card, Row, Col, Form, Container } from "react-bootstrap";
-
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi";
 import Loader from "./Loader";
-// const { Text, Title } = Typography;
-// const { Option } = Select;
 const demoImage =
   "https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News";
 
@@ -27,7 +23,8 @@ const News = ({ simplified }) => {
   if (!cryptoNews?.value) return <Loader />;
 
   return (
-    <Container className="my-5">
+    <Container className="my-5 p-0">
+      <h1>Latest Crypto News</h1>
       {!simplified && (
         <Form.Select size="lg" onChange={handleSearch}>
           <option value="Cryptocurrency">Cryptocurrency</option>
@@ -38,39 +35,67 @@ const News = ({ simplified }) => {
           ))}
         </Form.Select>
       )}
-      <Row className="my-5">
-        {cryptoNews.value.map((news, i) => (
-          <Col lg={4} md={6} sm={12} key={i} className="my-3">
-            <Card>
+      <Row className="mt-5">
+        {cryptoNews.value.length === 0 ? (
+          <h5>Nothing matched your search terms</h5>
+        ) : (
+          cryptoNews.value.map((news, i) => (
+            <Col xl={4} lg={6} md={6} key={i} className="my-3">
+              <Card xl={6} className="card-link">
+                <a href={news.url} target="_blank" rel="noreferrer">
+                  <Container className="news-header">
+                    <Card.Img
+                      className="news-img"
+                      variant="top"
+                      src={news?.image?.thumbnail?.contentUrl || demoImage}
+                      alt=""
+                    />
+                    <Card.Title as="h5" bsPrefix="news-title">
+                      {news.name}
+                    </Card.Title>
+                  </Container>
+                  <Card.Body>
+                    <Card.Text bsPrefix="news-text">
+                      {news.description}
+                    </Card.Text>
+                  </Card.Body>
+                  <Container className="news-provider">
+                    <Card.Title as="h6">
+                      {moment(news.datePublished).startOf("ss").fromNow()}
+                    </Card.Title>
+                  </Container>
+                </a>
+              </Card>
+            </Col>
+          ))
+        )}
+        {/* {cryptoNews.value.map((news, i) => (
+          <Col xl={4} lg={6} md={6} key={i} className="my-3">
+            <Card xl={6} className="card-link">
               <a href={news.url} target="_blank" rel="noreferrer">
-                <Card.Img
-                  className="news-img"
-                  variant="top"
-                  src={`${news?.image?.thumbnail?.contentUrl}` || demoImage}
-                  alt=""
-                />
-                <Card.Body>
-                  <Card.Title as="h4">
-                    {news.name.length > 50
-                      ? `${news.name.substring(0, 50)}...`
-                      : news.name}
+                <Container className="news-header">
+                  <Card.Img
+                    className="news-img"
+                    variant="top"
+                    src={news?.image?.thumbnail?.contentUrl  || demoImage}
+                    alt=""
+                  />
+                  <Card.Title as="h5" bsPrefix="news-title">
+                    {news.name}
                   </Card.Title>
-                  <Card.Text bsPrefix="news-text">
-                    {news.description.length > 80
-                      ? `${news.description.substring(0, 80)}...`
-                      : news.description}
-                  </Card.Text>
+                </Container>
+                <Card.Body>
+                  <Card.Text bsPrefix="news-text">{news.description}</Card.Text>
                 </Card.Body>
                 <Container className="news-provider">
-                  <Card.Title as="h6">{news.provider[0]?.name}</Card.Title>
-                  {/* <Card.Title as="h6">
+                  <Card.Title as="h6">
                     {moment(news.datePublished).startOf("ss").fromNow()}
-                  </Card.Title> */}
+                  </Card.Title>
                 </Container>
               </a>
             </Card>
           </Col>
-        ))}
+        ))} */}
       </Row>
     </Container>
   );

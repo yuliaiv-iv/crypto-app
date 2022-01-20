@@ -1,22 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Typography, Space } from "antd";
-const { Paragraph } = Typography;
+import { Container } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <Typography>
-        <Paragraph>
-          Cryptocurrency <br />
-          All rights reserved
-        </Paragraph>
-      </Typography>
-      <Space>
-        <Link to="/">Home</Link>
-        <Link to="/cryptocurrencies">Cryptocurrencies</Link>
-        <Link to="/news">News</Link>
-      </Space>
+    <footer className="footer mt-auto py-3 bg-light">
+      <Container>
+        <p className="text-center">Copyright © 2021 Cryptoverse Inc.</p>
+        <p className="text-center">All Rights Reserved.</p>
+      </Container>
     </footer>
   );
 };
