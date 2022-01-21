@@ -139,23 +139,25 @@ const CryptoDetails = () => {
         {cryptoDetails.name} live price in US Dollar (USD). View value
         statistics, market cap and supply.
       </p>
-      <Dropdown>
-        <Dropdown.Toggle className="drop-btn" id="dropdown-basic">
-          {timeperiod}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          {time.map((date, i) => (
-            <Dropdown.Item
-              key={i}
-              onClick={() => {
-                setTimeperiod(date);
-              }}
-            >
-              {date}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
+      <Container className="my-5 p-0">
+        <Dropdown>
+          <Dropdown.Toggle className="drop-btn" id="dropdown-basic">
+            {timeperiod}
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            {time.map((date, i) => (
+              <Dropdown.Item
+                key={i}
+                onClick={() => {
+                  setTimeperiod(date);
+                }}
+              >
+                {date}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </Container>
       <LineChart
         coinHistory={coinHistory}
         currentPrice={millify(cryptoDetails?.price)}

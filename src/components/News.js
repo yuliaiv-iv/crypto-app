@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
-import {
-  Card,
-  Row,
-  Col,
-  Container,
-  Dropdown,
-} from "react-bootstrap";
+import { Card, Row, Col, Container, Dropdown } from "react-bootstrap";
 import { useGetCryptosQuery } from "../services/cryptoApi";
 import { useGetCryptoNewsQuery } from "../services/cryptoNewsApi";
 import Loader from "./Loader";
@@ -28,23 +22,25 @@ const News = ({ simplified }) => {
     <Container className="my-5 p-0">
       <h1>Latest Crypto News</h1>
       {!simplified && (
-        <Dropdown>
-          <Dropdown.Toggle className="drop-btn" id="dropdown-basic">
-            {newsCategory}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            {data?.data?.coins?.map((currency, i) => (
-              <Dropdown.Item
-                key={i}
-                onClick={() => {
-                  setNewsCategory(currency.name);
-                }}
-              >
-                {currency.name}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
+        <Container className="my-5 p-0">
+          <Dropdown>
+            <Dropdown.Toggle className="drop-btn" id="dropdown-basic">
+              {newsCategory}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {data?.data?.coins?.map((currency, i) => (
+                <Dropdown.Item
+                  key={i}
+                  onClick={() => {
+                    setNewsCategory(currency.name);
+                  }}
+                >
+                  {currency.name}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Container>
       )}
       <Row className="mt-5">
         {cryptoNews.value.length === 0 ? (

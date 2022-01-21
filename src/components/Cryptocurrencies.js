@@ -27,7 +27,7 @@ const Cryptocurrencies = ({ simplified }) => {
   if (isFetching) return <Loader />;
 
   return (
-    <Container className="my-5 p-0">
+    <Container className="my-5">
       <h1>Top 12 Cryptos In The World</h1>
       {!simplified && (
         <Form.Control
